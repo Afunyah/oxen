@@ -201,6 +201,10 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                               }
                               final phoneVerifiedUser =
                                   await confirmUserLogin(codeController.text);
+
+                              print('Login Status:' +
+                                  phoneVerifiedUser.toString());
+
                               if (!phoneVerifiedUser) {
                                 return;
                               }

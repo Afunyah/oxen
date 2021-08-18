@@ -359,17 +359,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (!formKey.currentState!.validate()) {
-                                      return;
-                                    }
+                                    // if (!formKey.currentState!.validate()) {
+                                    //   return;
+                                    // }
                                     final user = await authUser(
                                       phoneNumberController.text,
                                     );
 
                                     print('Login Status:' + user.toString());
-                                    // if (!user) {
-                                    //   return;
-                                    // }
 
                                     await Navigator.push(
                                       context,

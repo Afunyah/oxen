@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:amplify_flutter/amplify.dart';
 import 'package:oxen/screens/myTasksScreen.dart';
 
 import '../auth/authUtil.dart';
@@ -175,7 +178,7 @@ class _VerifyWidgetState extends State<VerifyWidget> {
                               ),
                               style: FlutterFlowTheme.bodyText1.override(
                                 fontFamily: 'Lexend Deca',
-                                color: FlutterFlowTheme.darkBG,
+                                color: Color(0xFFDBE2E7),
                               ),
                             ),
                           )
@@ -199,11 +202,20 @@ class _VerifyWidgetState extends State<VerifyWidget> {
                                 );
                                 return;
                               }
-                              final phoneVerifiedUser = await verifyCode(
+
+                              bool phoneVerifiedUser = await verifyCode(
                                   widget.username, phoneNumberController.text);
+
+                                  
+
                               if (!phoneVerifiedUser) {
                                 return;
                               }
+
+                              // bool user = await authUser(widget.username);
+
+                              // print('Login status: ' + user.toString());
+
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

@@ -100,7 +100,8 @@ Future<bool> authUser(String username) async {
       password: genericKey,
     );
 
-    isSignedIn = res.isSignedIn;
+    isSignedIn = res
+        .isSignedIn; // I think will always be false since MFA enforced. set state()?
   } on AuthException catch (e) {
     print(e.message);
   }
