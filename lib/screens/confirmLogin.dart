@@ -17,14 +17,14 @@ class ConfirmLoginWidget extends StatefulWidget {
 }
 
 class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
-  late TextEditingController phoneNumberController;
+  late TextEditingController codeController;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    phoneNumberController = TextEditingController();
+    codeController = TextEditingController();
   }
 
   @override
@@ -133,7 +133,7 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              controller: phoneNumberController,
+                              controller: codeController,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Enter verification code here',
@@ -175,7 +175,7 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                               ),
                               style: FlutterFlowTheme.bodyText1.override(
                                 fontFamily: 'Lexend Deca',
-                                color: FlutterFlowTheme.darkBG,
+                                color: Color(0xFFDBE2E7),
                               ),
                             ),
                           )
@@ -190,7 +190,7 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                         children: [
                           FFButtonWidget(
                             onPressed: () async {
-                              if (phoneNumberController.text.isEmpty) {
+                              if (codeController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content:
@@ -199,8 +199,8 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                                 );
                                 return;
                               }
-                              final phoneVerifiedUser = await confirmUserLogin(
-                                  phoneNumberController.text);
+                              final phoneVerifiedUser =
+                                  await confirmUserLogin(codeController.text);
                               if (!phoneVerifiedUser) {
                                 return;
                               }

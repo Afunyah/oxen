@@ -4,13 +4,14 @@ import 'package:amplify_datastore/amplify_datastore.dart';
 
 import '../amplifyconfiguration.dart';
 
+String genericKey = 'oxen_gen_key_8181220';
+
 void configureAmplify() async {
   // Add Pinpoint and Cognito Plugins, or any other plugins you want to use
   AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
   await Amplify.addPlugins([authPlugin]);
 
-  // Once Plugins are added, configure Amplify
-  // Note: Amplify can only be configured once.
+  // Once Plugins are added, configure Amplify. Note: Amplify can only be configured once.
   try {
     await Amplify.configure(amplifyconfig);
   } on AmplifyAlreadyConfiguredException {
@@ -19,45 +20,21 @@ void configureAmplify() async {
   }
 }
 
-Future<bool> regUser(String username, String password) async {
-  // print('Name: $username, Password: $password');
-  // bool isSignUpComplete = false;
-
-  // try {
-  //   Map<String, String> userAttributes = {
-  //     'email': username,
-  //     'phone_number': '+447710832569'
-  //   };
-  //   SignUpResult res = await Amplify.Auth.signUp(
-  //       username: username,
-  //       password: password,
-  //       options: CognitoSignUpOptions(userAttributes: userAttributes));
-
-  //   isSignUpComplete = res.isSignUpComplete;
-  // } on AuthException catch (e) {
-  //   print(e.message);
-  //   // return e.message;
-  // }
-
-  // return isSignUpComplete;
-
-  print('Name: $username, Password: $password');
+Future<bool> regUser(String username) async {
+  print('Name: $username, Password: $genericKey');
   bool isSignUpComplete = false;
 
   try {
-    Map<String, String> userAttributes = {
-      // 'email': username,
-      // 'phone_number': '+447710832569'
-    };
+    Map<String, String> userAttributes = {};
+
     SignUpResult res = await Amplify.Auth.signUp(
         username: username,
-        password: password,
+        password: genericKey,
         options: CognitoSignUpOptions(userAttributes: userAttributes));
 
     isSignUpComplete = res.isSignUpComplete;
   } on AuthException catch (e) {
     print(e.message);
-    // return e.message;
   }
 
   return isSignUpComplete;
@@ -103,35 +80,8 @@ Future<bool> userSignOut() async {
   return isSignedOut;
 }
 
-Future<bool> authUser(String username, String password) async {
-  // print('Name: $username, Password: $password');
-  // bool isSignedIn = false;
-
-  // // CognitoAuthSession? session = (await Amplify.Auth.fetchAuthSession(
-  // //         options: CognitoSessionOptions(getAWSCredentials: true)))
-  // //     as CognitoAuthSession?;
-
-  // // print('Access key: ${session!.credentials!.awsAccessKey}');
-  // // print('Secret Key: ${session.credentials!.awsSecretKey}');
-  // // print('Identity ID:  ${session.identityId}');
-  // // print('User Pool tokens: ${session.userPoolTokens!.accessToken}');
-  // // print('User Pool tokens: ${session.userPoolTokens!.idToken}');
-
-  // try {
-  //   SignInResult res = await Amplify.Auth.signIn(
-  //     username: username,
-  //     password: password,
-  //   );
-
-  //   isSignedIn = res.isSignedIn;
-  // } on AuthException catch (e) {
-  //   print(e.message);
-  //   // return e.message;
-  // }
-
-  // return isSignedIn;
-
-  print('Name: $username, Password: $password');
+Future<bool> authUser(String username) async {
+  print('Name: $username, Password: $genericKey');
   bool isSignedIn = false;
 
   // CognitoAuthSession? session = (await Amplify.Auth.fetchAuthSession(
@@ -147,15 +97,12 @@ Future<bool> authUser(String username, String password) async {
   try {
     SignInResult res = await Amplify.Auth.signIn(
       username: username,
-      // password: 'Password123.',
-      password: password,
+      password: genericKey,
     );
-    // print('Res NextStep : ');
-    // print(res.);
+
     isSignedIn = res.isSignedIn;
   } on AuthException catch (e) {
     print(e.message);
-    // return e.message;
   }
 
   return isSignedIn;

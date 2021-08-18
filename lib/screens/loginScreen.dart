@@ -119,7 +119,7 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  late TextEditingController emailTextController;
+  late TextEditingController phoneNumberController;
   late TextEditingController passwordTextController;
   late bool passwordVisibility;
   final formKey = GlobalKey<FormState>();
@@ -129,7 +129,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   void initState() {
     super.initState();
     configureAmplify();
-    emailTextController = TextEditingController();
+    phoneNumberController = TextEditingController();
     passwordTextController = TextEditingController();
     passwordVisibility = false;
   }
@@ -179,28 +179,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
                         child: InkWell(
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChangePasswordWidget(),
-                              ),
-                            );
-                          },
+                          // onTap: () async {
+                          //   await Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => ChangePasswordWidget(),
+                          //     ),
+                          //   );
+                          // },
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               TextFormField(
-                                controller: emailTextController,
+                                controller: phoneNumberController,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Email Address',
+                                  labelText: 'Phone Number',
                                   labelStyle:
                                       FlutterFlowTheme.bodyText1.override(
                                     fontFamily: 'Lexend Deca',
                                     fontSize: null,
                                   ),
-                                  hintText: 'Your email...',
+                                  hintText: 'Your phone number...',
                                   hintStyle:
                                       FlutterFlowTheme.bodyText1.override(
                                     fontFamily: 'Lexend Deca',
@@ -240,115 +240,121 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 style: FlutterFlowTheme.bodyText1.override(
                                   fontFamily: 'Lexend Deca',
                                 ),
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.phone,
                                 validator: (val) {
                                   if (val!.isEmpty) {
-                                    return 'Please fill in a valid email address...';
+                                    return 'Please fill in a valid phone number...';
                                   }
 
                                   return null;
                                 },
                               ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                child: TextFormField(
-                                  controller: passwordTextController,
-                                  obscureText: !passwordVisibility,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    labelStyle:
-                                        FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Lexend Deca',
-                                    ),
-                                    hintText: 'Enter your password here...',
-                                    hintStyle:
-                                        FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0x9AFFFFFF),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.secondaryColor,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(8),
-                                        bottomRight: Radius.circular(8),
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(8),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.secondaryColor,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(8),
-                                        bottomRight: Radius.circular(8),
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(8),
-                                      ),
-                                    ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.secondaryColor,
-                                    prefixIcon: Icon(
-                                      Icons.lock_outline,
-                                      color: FlutterFlowTheme.primaryColor,
-                                    ),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                        () => passwordVisibility =
-                                            !passwordVisibility,
-                                      ),
-                                      child: Icon(
-                                        passwordVisibility
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off_outlined,
-                                        color: Color(0x80FFFFFF),
-                                        size: 22,
-                                      ),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Lexend Deca',
-                                  ),
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return 'That password doesn\'t match.';
-                                    }
+                              // Padding(
+                              //   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              //   child: TextFormField(
+                              //     controller: passwordTextController,
+                              //     obscureText: !passwordVisibility,
+                              //     decoration: InputDecoration(
+                              //       labelText: 'Password',
+                              //       labelStyle:
+                              //           FlutterFlowTheme.bodyText1.override(
+                              //         fontFamily: 'Lexend Deca',
+                              //       ),
+                              //       hintText: 'Enter your password here...',
+                              //       hintStyle:
+                              //           FlutterFlowTheme.bodyText1.override(
+                              //         fontFamily: 'Lexend Deca',
+                              //         color: Color(0x9AFFFFFF),
+                              //       ),
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderSide: BorderSide(
+                              //           color: FlutterFlowTheme.secondaryColor,
+                              //           width: 1,
+                              //         ),
+                              //         borderRadius: BorderRadius.only(
+                              //           bottomLeft: Radius.circular(8),
+                              //           bottomRight: Radius.circular(8),
+                              //           topLeft: Radius.circular(8),
+                              //           topRight: Radius.circular(8),
+                              //         ),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderSide: BorderSide(
+                              //           color: FlutterFlowTheme.secondaryColor,
+                              //           width: 1,
+                              //         ),
+                              //         borderRadius: BorderRadius.only(
+                              //           bottomLeft: Radius.circular(8),
+                              //           bottomRight: Radius.circular(8),
+                              //           topLeft: Radius.circular(8),
+                              //           topRight: Radius.circular(8),
+                              //         ),
+                              //       ),
+                              //       filled: true,
+                              //       fillColor: FlutterFlowTheme.secondaryColor,
+                              //       prefixIcon: Icon(
+                              //         Icons.lock_outline,
+                              //         color: FlutterFlowTheme.primaryColor,
+                              //       ),
+                              //       suffixIcon: InkWell(
+                              //         onTap: () => setState(
+                              //           () => passwordVisibility =
+                              //               !passwordVisibility,
+                              //         ),
+                              //         child: Icon(
+                              //           passwordVisibility
+                              //               ? Icons.visibility_outlined
+                              //               : Icons.visibility_off_outlined,
+                              //           color: Color(0x80FFFFFF),
+                              //           size: 22,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     style: FlutterFlowTheme.bodyText1.override(
+                              //       fontFamily: 'Lexend Deca',
+                              //     ),
+                              //     validator: (val) {
+                              //       if (val!.isEmpty) {
+                              //         return 'That password doesn\'t match.';
+                              //       }
 
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                    },
-                                    text: 'Forgotten password?',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 40,
-                                      color: FlutterFlowTheme.primaryColor,
-                                      textStyle:
-                                          FlutterFlowTheme.subtitle2.override(
-                                        fontFamily: 'Lexend Deca',
-                                        color: Colors.white,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              //       return null;
+                              //     },
+                              //   ),
+                              // ),
+                              // Align(
+                              //   alignment: Alignment(0, 0),
+                              //   child: Padding(
+                              //     padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                              //     child: FFButtonWidget(
+                              //       onPressed: () async {
+                              //         await Navigator.push(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 ChangePasswordWidget(),
+                              //           ),
+                              //         );
+                              //       },
+                              //       text: 'Forgotten password?',
+                              //       options: FFButtonOptions(
+                              //         width: double.infinity,
+                              //         height: 40,
+                              //         color: FlutterFlowTheme.primaryColor,
+                              //         textStyle:
+                              //             FlutterFlowTheme.subtitle2.override(
+                              //           fontFamily: 'Lexend Deca',
+                              //           color: Colors.white,
+                              //         ),
+                              //         borderSide: BorderSide(
+                              //           color: Colors.transparent,
+                              //           width: 1,
+                              //         ),
+                              //         borderRadius: 12,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
                                 child: FFButtonWidget(
@@ -357,29 +363,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       return;
                                     }
                                     final user = await authUser(
-                                      emailTextController.text,
-                                      passwordTextController.text,
+                                      phoneNumberController.text,
                                     );
+
                                     print('Login Status:' + user.toString());
                                     // if (!user) {
                                     //   return;
                                     // }
-                                    // await Navigator.pushAndRemoveUntil(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           // NavBarPage(initialPage: 'myTasks'),
-                                    //           MyTasksWidget()),
-                                    //   (r) => false,
-                                    // );
-                                    await Navigator.pushAndRemoveUntil(
+
+                                    await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               // NavBarPage(initialPage: 'myTasks'),
                                               ConfirmLoginWidget(
-                                                  emailTextController.text)),
-                                      (r) => false,
+                                                  phoneNumberController.text)),
                                     );
                                   },
                                   text: 'Login',
@@ -424,19 +422,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       ),
                                       FFButtonWidget(
                                         onPressed: () async {
-                                          //   await Navigator.push(
-                                          //     context,
-                                          //     PageTransition(
-                                          //       type: PageTransitionType.fade,
-                                          //       duration:
-                                          //           Duration(milliseconds: 200),
-                                          //       reverseDuration:
-                                          //           Duration(milliseconds: 200),
-                                          //       child: RegisterWidget(),
-                                          //     ),
-                                          //   );
-                                          // }
-                                          userSignOut();
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 200),
+                                              child: RegisterWidget(),
+                                            ),
+                                          );
                                         },
                                         text: 'Register',
                                         options: FFButtonOptions(
@@ -455,11 +451,35 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           ),
                                           borderRadius: 0,
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 3, 0, 18),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      userSignOut();
+                                    },
+                                    text: 'Log Out',
+                                    options: FFButtonOptions(
+                                      width: 100,
+                                      height: 20,
+                                      color: FlutterFlowTheme.primaryColor,
+                                      textStyle:
+                                          FlutterFlowTheme.subtitle2.override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: Colors.white,
+                                      ),
+                                      elevation: 0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: 0,
+                                    ),
+                                  )),
                             ],
                           ),
                         ),
