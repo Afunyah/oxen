@@ -15,6 +15,12 @@
       "auth": {
         "oxen1763c37e": {},
         "oxen": {}
+      },
+      "function": {
+        "autoSignUpAndConfirmSignUp": {
+          "deploymentBucketName": "amplify-oxen-dev-41450-deployment",
+          "s3Key": "amplify-builds/autoSignUpAndConfirmSignUp-574f707a7a6969722f69-build.zip"
+        }
       }
     }
   }

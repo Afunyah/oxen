@@ -3,6 +3,7 @@ import '../auth/authUtil.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'confirmLogin.dart';
 import 'loginScreen.dart';
 import 'verifyScreen.dart';
 import 'package:flutter/material.dart';
@@ -312,10 +313,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                   return;
                                 }
 
+                                authUser(phoneNumberController.text);
+
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => VerifyWidget(
+                                    builder: (context) => ConfirmLoginWidget(
                                         phoneNumberController.text),
                                   ),
                                 );

@@ -22,5 +22,11 @@
     }
   },
   "api": {},
-  "function": {}
+  "function": {
+    "autoSignUpAndConfirmSignUp": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
 }

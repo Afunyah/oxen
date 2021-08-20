@@ -84,6 +84,7 @@ Future<bool> authUser(String username) async {
   print('Name: $username, Password: $genericKey');
   bool isSignedIn = false;
 
+  
   // CognitoAuthSession? session = (await Amplify.Auth.fetchAuthSession(
   //         options: CognitoSessionOptions(getAWSCredentials: true)))
   //     as CognitoAuthSession?;
@@ -110,6 +111,23 @@ Future<bool> authUser(String username) async {
 }
 
 Future<bool> recoverPassword(String name) async {
+  bool isPasswordReset = false;
+
+  try {
+    ResetPasswordResult res = await Amplify.Auth.resetPassword(
+      username: name,
+    );
+
+    isPasswordReset = res.isPasswordReset;
+  } on AmplifyException catch (e) {
+    print(e);
+  }
+
+  return isPasswordReset;
+}
+
+
+Future<bool> checkSession(String name) async {
   bool isPasswordReset = false;
 
   try {
