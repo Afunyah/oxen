@@ -128,7 +128,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    configureAmplify();
+    // configureAmplify();
     phoneNumberController = TextEditingController();
     passwordTextController = TextEditingController();
     passwordVisibility = false;
@@ -457,7 +457,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   padding: EdgeInsets.fromLTRB(0, 3, 0, 18),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      userSignOut();
+                                      bool sOut = await userSignOut();
+
+                                      await checkSession();
                                     },
                                     text: 'Log Out',
                                     options: FFButtonOptions(

@@ -6,20 +6,6 @@ import '../amplifyconfiguration.dart';
 
 String genericKey = 'oxen_gen_key_8181220';
 
-void configureAmplify() async {
-  // Add Pinpoint and Cognito Plugins, or any other plugins you want to use
-  AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-  await Amplify.addPlugins([authPlugin]);
-
-  // Once Plugins are added, configure Amplify. Note: Amplify can only be configured once.
-  try {
-    await Amplify.configure(amplifyconfig);
-  } on AmplifyAlreadyConfiguredException {
-    print(
-        "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
-  }
-}
-
 Future<bool> regUser(String username) async {
   print('Name: $username, Password: $genericKey');
   bool isSignUpComplete = false;
@@ -84,7 +70,6 @@ Future<bool> authUser(String username) async {
   print('Name: $username, Password: $genericKey');
   bool isSignedIn = false;
 
-  
   // CognitoAuthSession? session = (await Amplify.Auth.fetchAuthSession(
   //         options: CognitoSessionOptions(getAWSCredentials: true)))
   //     as CognitoAuthSession?;
@@ -126,19 +111,32 @@ Future<bool> recoverPassword(String name) async {
   return isPasswordReset;
 }
 
-
-Future<bool> checkSession(String name) async {
-  bool isPasswordReset = false;
+Future<bool> checkSession() async {
+  bool res = false;
 
   try {
-    ResetPasswordResult res = await Amplify.Auth.resetPassword(
-      username: name,
-    );
+    AuthUser currentUser = await Amplify.Auth.getCurrentUser();
+    AuthSession currentSession = await Amplify.Auth.fetchAuthSession();
 
-    isPasswordReset = res.isPasswordReset;
-  } on AmplifyException catch (e) {
+    print('Current User Details:');
+    print(currentUser.toString());
+    print(currentUser.userId);
+    print(currentUser.username);
+
+    print('Current Session Details:');
+    print(currentSession.toString());
+    print(currentSession.isSignedIn);
+
+    res = currentSession.isSignedIn;
+  } on SignedOutException {
+    print('Session logging null - no user signed in');
+    return res;
+  } on NotAuthorizedException {
+    print('Session logging null - no user signed in');
+    return res;
+  } catch (e) {
     print(e);
   }
 
-  return isPasswordReset;
+  return res;
 }

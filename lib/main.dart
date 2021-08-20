@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:oxen/auth/authUtil.dart';
 import 'package:oxen/screens/loginScreen.dart';
 import 'package:oxen/screens/splashScreen.dart';
 
@@ -9,6 +10,20 @@ import 'amplifyconfiguration.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+void configureAmplify() async {
+  // Add Pinpoint and Cognito Plugins, or any other plugins you want to use
+  AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
+  await Amplify.addPlugins([authPlugin]);
+
+  // Once Plugins are added, configure Amplify. Note: Amplify can only be configured once.
+  try {
+    await Amplify.configure(amplifyconfig);
+  } on AmplifyAlreadyConfiguredException {
+    print(
+        "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -20,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    configureAmplify();
   }
 
   @override

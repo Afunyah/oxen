@@ -1,3 +1,5 @@
+import 'package:oxen/auth/authUtil.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -73,6 +75,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                               padding: EdgeInsets.fromLTRB(0, 2, 0, 20),
                               child: FFButtonWidget(
                                 onPressed: () async {
+                                  await checkSession();
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -102,6 +105,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                             ),
                             FFButtonWidget(
                               onPressed: () async {
+                                await checkSession();
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

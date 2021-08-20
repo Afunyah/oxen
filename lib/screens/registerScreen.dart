@@ -29,7 +29,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   @override
   void initState() {
     super.initState();
-    configureAmplify();
+    // configureAmplify();
     confirmPasswordTextController = TextEditingController();
     passwordVisibility2 = false;
     phoneNumberController = TextEditingController();
@@ -313,7 +313,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                   return;
                                 }
 
-                                authUser(phoneNumberController.text);
+                                await authUser(phoneNumberController.text);
 
                                 await Navigator.push(
                                   context,

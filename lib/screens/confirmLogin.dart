@@ -200,7 +200,8 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                                 return;
                               }
                               final phoneVerifiedUser =
-                                  await confirmUserLogin(codeController.text);
+                                  await confirmUserLogin(codeController.text)
+                                      .then((value) => checkSession());
 
                               print('Login Status:' +
                                   phoneVerifiedUser.toString());
