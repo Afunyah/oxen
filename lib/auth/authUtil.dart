@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_datastore/amplify_datastore.dart';
@@ -126,9 +128,12 @@ Future<bool> checkSession() async {
     print('Current Session Details:');
     print(currentSession.toString());
     print(currentSession.isSignedIn);
+    
 
     res = currentSession.isSignedIn;
-  } on SignedOutException {
+  }
+  // Does not work even if I remove last catch. Prints out whole err log
+  on SignedOutException {
     print('Session logging null - no user signed in');
     return res;
   } on NotAuthorizedException {

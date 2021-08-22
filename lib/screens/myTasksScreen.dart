@@ -1,4 +1,6 @@
 import 'package:oxen/auth/authUtil.dart';
+import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
+import 'package:oxen/screens/splashScreen.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -68,12 +70,12 @@ class _MyTasksWidgetState extends State<MyTasksWidget> {
                   height: 53,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.darkBG,
-                    image: DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: Image.asset(
-                        'assets/images/waves@2x.png',
-                      ).image,
-                    ),
+                    // image: DecorationImage(
+                    //   fit: BoxFit.fitWidth,
+                    //   image: Image.asset(
+                    //     'assets/images/waves@2x.png',
+                    //   ).image,
+                    // ),
                   ),
                 )
               ],
@@ -91,7 +93,35 @@ class _MyTasksWidgetState extends State<MyTasksWidget> {
                   )
                 ],
               ),
-            )
+            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 2, 0, 20),
+                child: FFButtonWidget(
+                    text: 'Log Out',
+                    onPressed: () async {
+                      await userSignOut().then((value) =>
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SplashScreenWidget()),
+                              (route) => false));
+                    },
+                    options: FFButtonOptions(
+                      width: 200,
+                      height: 50,
+                      color: FlutterFlowTheme.primaryColor,
+                      textStyle: FlutterFlowTheme.subtitle2.override(
+                        fontFamily: 'Lexend Deca',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: 8,
+                    )))
           ],
         ),
       ),

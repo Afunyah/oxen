@@ -366,8 +366,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       phoneNumberController.text,
                                     );
 
-                                    print('Login Status:' + user.toString());
-
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

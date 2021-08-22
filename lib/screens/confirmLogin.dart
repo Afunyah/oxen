@@ -37,11 +37,11 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
           color: Color(0xFF262D34),
-          image: DecorationImage(
-            image: Image.asset(
-              'assets/images/robinPhoneBG.png',
-            ).image,
-          ),
+          // image: DecorationImage(
+          //   image: Image.asset(
+          //     'assets/images/robinPhoneBG.png',
+          //   ).image,
+          // ),
         ),
         child: Align(
           alignment: Alignment(0, 1),
@@ -200,8 +200,7 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                                 return;
                               }
                               final phoneVerifiedUser =
-                                  await confirmUserLogin(codeController.text)
-                                      .then((value) => checkSession());
+                                  await confirmUserLogin(codeController.text);
 
                               print('Login Status:' +
                                   phoneVerifiedUser.toString());

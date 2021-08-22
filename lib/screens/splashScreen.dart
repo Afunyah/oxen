@@ -28,12 +28,12 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.primaryBlack,
-          image: DecorationImage(
-            fit: BoxFit.fill,
-            image: Image.asset(
-              'assets/images/bg_login.png',
-            ).image,
-          ),
+          // image: DecorationImage(
+          //   fit: BoxFit.fill,
+          //   image: Image.asset(
+          //     'assets/images/bg_login.png',
+          //   ).image,
+          // ),
         ),
         child: Padding(
           padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
@@ -75,7 +75,6 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                               padding: EdgeInsets.fromLTRB(0, 2, 0, 20),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  await checkSession();
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
