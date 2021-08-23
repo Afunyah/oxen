@@ -1,20 +1,20 @@
-import 'package:oxen/auth/authUtil.dart';
+import 'package:oxen/auth/auth_utils.dart';
 import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
-import 'package:oxen/screens/splashScreen.dart';
+import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
 
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
+import 'package:oxen/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyTasksWidget extends StatefulWidget {
-  MyTasksWidget({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
 
   @override
-  _MyTasksWidgetState createState() => _MyTasksWidgetState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyTasksWidgetState extends State<MyTasksWidget> {
+class _HomePageState extends State<HomePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // @override
@@ -103,7 +103,8 @@ class _MyTasksWidgetState extends State<MyTasksWidget> {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SplashScreenWidget()),
+                                  builder: (context) =>
+                                      SplashScreenPageWidget()),
                               (route) => false));
                     },
                     options: FFButtonOptions(

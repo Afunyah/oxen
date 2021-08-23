@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:oxen/screens/confirmLogin.dart';
-import 'package:oxen/screens/myTasksScreen.dart';
-
-import '../amplifyconfiguration.dart';
-
-import 'package:flutter_login/flutter_login.dart';
+import 'package:oxen/screens/confirm_login_page/confirm_login_page.dart';
 
 // class LoginScreen extends StatefulWidget {
 //   const LoginScreen({Key? key}) : super(key: key);
@@ -100,25 +92,22 @@ import 'package:flutter_login/flutter_login.dart';
 // }
 
 // import '../auth/auth_util.dart';
-import 'changePasswordScreen.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
-import 'registerScreen.dart';
-import '../auth/authUtil.dart';
-import 'package:flutter/material.dart';
+import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
+import 'package:oxen/flutter_flow/flutter_flow_util.dart';
+import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
+import 'package:oxen/screens/register_page/register_page.dart';
+import 'package:oxen/auth/auth_utils.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+class LoginPageWidget extends StatefulWidget {
+  const LoginPageWidget({Key? key}) : super(key: key);
 
   @override
-  _LoginWidgetState createState() => _LoginWidgetState();
+  _LoginPageWidgetState createState() => _LoginPageWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginPageWidgetState extends State<LoginPageWidget> {
   late TextEditingController phoneNumberController;
   late TextEditingController passwordTextController;
   late bool passwordVisibility;
@@ -362,7 +351,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     // if (!formKey.currentState!.validate()) {
                                     //   return;
                                     // }
-                                    final user = await authUser(
+                                    await authUser(
                                       phoneNumberController.text,
                                     );
 
@@ -371,7 +360,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               // NavBarPage(initialPage: 'myTasks'),
-                                              ConfirmLoginWidget(
+                                              ConfirmLoginPageWidget(
                                                   phoneNumberController.text)),
                                     );
                                   },
@@ -425,7 +414,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   Duration(milliseconds: 200),
                                               reverseDuration:
                                                   Duration(milliseconds: 200),
-                                              child: RegisterWidget(),
+                                              child: RegisterPageWidget(),
                                             ),
                                           );
                                         },
@@ -455,8 +444,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   padding: EdgeInsets.fromLTRB(0, 3, 0, 18),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      bool sOut = await userSignOut();
-
                                       await checkSession();
                                     },
                                     text: 'Log Out',

@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_datastore/amplify_datastore.dart';
-
-import '../amplifyconfiguration.dart';
 
 String genericKey = 'oxen_gen_key_8181220';
 
@@ -61,7 +58,7 @@ Future<bool> userSignOut() async {
   bool isSignedOut = true;
 
   try {
-    SignOutResult res = await Amplify.Auth.signOut();
+    await Amplify.Auth.signOut();
   } on AuthException catch (e) {
     print(e.message);
   }
@@ -128,7 +125,6 @@ Future<bool> checkSession() async {
     print('Current Session Details:');
     print(currentSession.toString());
     print(currentSession.isSignedIn);
-    
 
     res = currentSession.isSignedIn;
   }

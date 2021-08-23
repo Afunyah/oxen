@@ -1,23 +1,21 @@
-import '../auth/authUtil.dart';
-// import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import 'confirmLogin.dart';
-import 'loginScreen.dart';
-import 'verifyScreen.dart';
+import 'package:oxen/auth/auth_utils.dart';
+import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
+import 'package:oxen/flutter_flow/flutter_flow_util.dart';
+import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
+import 'package:oxen/screens/confirm_login_page/confirm_login_page.dart';
+import 'package:oxen/screens/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class RegisterWidget extends StatefulWidget {
-  const RegisterWidget({Key? key}) : super(key: key);
+class RegisterPageWidget extends StatefulWidget {
+  const RegisterPageWidget({Key? key}) : super(key: key);
 
   @override
-  _RegisterWidgetState createState() => _RegisterWidgetState();
+  _RegisterPageWidgetState createState() => _RegisterPageWidgetState();
 }
 
-class _RegisterWidgetState extends State<RegisterWidget> {
+class _RegisterPageWidgetState extends State<RegisterPageWidget> {
   late TextEditingController confirmPasswordTextController;
   late bool passwordVisibility2;
   late TextEditingController phoneNumberController;
@@ -318,8 +316,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ConfirmLoginWidget(
-                                        phoneNumberController.text),
+                                    builder: (context) =>
+                                        ConfirmLoginPageWidget(
+                                            phoneNumberController.text),
                                   ),
                                 );
                               },
@@ -369,7 +368,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                           duration: Duration(milliseconds: 200),
                                           reverseDuration:
                                               Duration(milliseconds: 200),
-                                          child: LoginWidget(),
+                                          child: LoginPageWidget(),
                                         ),
                                       );
                                     },

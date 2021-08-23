@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:oxen/auth/authUtil.dart';
-import 'package:oxen/screens/initScreen.dart';
-import 'package:oxen/screens/loginScreen.dart';
-import 'package:oxen/screens/myTasksScreen.dart';
-import 'package:oxen/screens/splashScreen.dart';
+import 'package:oxen/auth/auth_utils.dart';
+import 'package:oxen/screens/init_page/init_page.dart';
+import 'package:oxen/screens/login_page/login_page.dart';
+import 'package:oxen/screens/home_page/home_page.dart';
+import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
 
 import 'amplifyconfiguration.dart';
 
@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
   //           Navigator.pushAndRemoveUntil(
   //               context,
   //               MaterialPageRoute(
-  //                 builder: (context) => MyTasksWidget(),
+  //                 builder: (context) => HomePage(),
   //               ),
   //               (route) => false);
   //         }
@@ -83,12 +83,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Oxen',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: SplashScreenWidget(),
-      home: InitScreenWidget(),
+      // home: SplashScreenPageWidget(),
+      home: InitPageWidget(),
     );
   }
 }
@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> {
 //             )
 //           : currentUser.loggedIn
 //               ? NavBarPage()
-//               : SplashScreenWidget(),
+//               : SplashScreenPageWidget(),
 //     );
 //   }
 // }
@@ -170,7 +170,7 @@ class _MyAppState extends State<MyApp> {
 //   @override
 //   Widget build(BuildContext context) {
 //     final tabs = {
-//       'myTasks': MyTasksWidget(),
+//       'myTasks': HomePage(),
 //       // 'MyProfile': MyProfileWidget(),
 //     };
 //     return Scaffold(

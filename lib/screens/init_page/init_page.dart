@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
-import 'package:oxen/auth/authUtil.dart';
-import 'package:oxen/screens/splashScreen.dart';
+import 'package:oxen/auth/auth_utils.dart';
+import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
 
-import '../amplifyconfiguration.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import 'loginScreen.dart';
-import 'myTasksScreen.dart';
-import 'registerScreen.dart';
+import 'package:oxen/amplifyconfiguration.dart';
+import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
+import 'package:oxen/flutter_flow/flutter_flow_util.dart';
+import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
+import 'package:oxen/screens/login_page/login_page.dart';
+import 'package:oxen/screens/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
@@ -52,14 +51,14 @@ Future<void> configureAmplify() async {
   }
 }
 
-class InitScreenWidget extends StatefulWidget {
-  InitScreenWidget({Key? key}) : super(key: key);
+class InitPageWidget extends StatefulWidget {
+  InitPageWidget({Key? key}) : super(key: key);
 
   @override
-  _InitScreenWidgetState createState() => _InitScreenWidgetState();
+  _InitPageWidgetState createState() => _InitPageWidgetState();
 }
 
-class _InitScreenWidgetState extends State<InitScreenWidget> {
+class _InitPageWidgetState extends State<InitPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void initState() {
@@ -73,14 +72,14 @@ class _InitScreenWidgetState extends State<InitScreenWidget> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyTasksWidget(),
+                  builder: (context) => HomePage(),
                 ),
                 (route) => false);
           } else {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SplashScreenWidget(),
+                  builder: (context) => SplashScreenPageWidget(),
                 ),
                 (route) => false);
           }

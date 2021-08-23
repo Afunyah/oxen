@@ -1,22 +1,21 @@
-import 'package:oxen/screens/myTasksScreen.dart';
+import 'package:oxen/screens/home_page/home_page.dart';
 
-import '../auth/authUtil.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
+import 'package:oxen/auth/auth_utils.dart';
+import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
+import 'package:oxen/flutter_flow/flutter_flow_util.dart';
+import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-class ConfirmLoginWidget extends StatefulWidget {
+class ConfirmLoginPageWidget extends StatefulWidget {
   final String username;
-  ConfirmLoginWidget(this.username, {Key? key}) : super(key: key);
+  ConfirmLoginPageWidget(this.username, {Key? key}) : super(key: key);
 
   @override
-  _ConfirmLoginWidgetState createState() => _ConfirmLoginWidgetState();
+  _ConfirmLoginPageWidgetState createState() => _ConfirmLoginPageWidgetState();
 }
 
-class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
+class _ConfirmLoginPageWidgetState extends State<ConfirmLoginPageWidget> {
   late TextEditingController codeController;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -211,7 +210,7 @@ class _ConfirmLoginWidgetState extends State<ConfirmLoginWidget> {
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MyTasksWidget(),
+                                  builder: (context) => HomePage(),
                                 ),
                                 (r) => false,
                               );

@@ -1,21 +1,21 @@
-import 'package:oxen/auth/authUtil.dart';
+import 'package:oxen/auth/auth_utils.dart';
 
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import 'loginScreen.dart';
-import 'registerScreen.dart';
+import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
+import 'package:oxen/flutter_flow/flutter_flow_util.dart';
+import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
+import 'package:oxen/screens/login_page/login_page.dart';
+import 'package:oxen/screens/register_page/register_page.dart';
 import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
-class SplashScreenWidget extends StatefulWidget {
-  SplashScreenWidget({Key? key}) : super(key: key);
+class SplashScreenPageWidget extends StatefulWidget {
+  SplashScreenPageWidget({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenWidgetState createState() => _SplashScreenWidgetState();
+  _SplashScreenPageWidgetState createState() => _SplashScreenPageWidgetState();
 }
 
-class _SplashScreenWidgetState extends State<SplashScreenWidget> {
+class _SplashScreenPageWidgetState extends State<SplashScreenPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -78,7 +78,8 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RegisterWidget(),
+                                      builder: (context) =>
+                                          RegisterPageWidget(),
                                     ),
                                   );
                                 },
@@ -108,7 +109,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginWidget(),
+                                    builder: (context) => LoginPageWidget(),
                                   ),
                                 );
                               },
