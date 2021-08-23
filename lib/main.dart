@@ -2,55 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:oxen/auth/auth_utils.dart';
 import 'package:oxen/screens/init_page/init_page.dart';
-import 'package:oxen/screens/login_page/login_page.dart';
-import 'package:oxen/screens/home_page/home_page.dart';
-import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
-
-import 'amplifyconfiguration.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-Future<void> configureAmplify() async {
-  // Add Pinpoint and Cognito Plugins, or any other plugins you want to use
-  AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-  Amplify.addPlugins([authPlugin]);
-
-  // Once Plugins are added, configure Amplify. Note: Amplify can only be configured once.
-  try {
-    // await Amplify.configure(amplifyconfig).whenComplete(() => checkSession());\
-    await Amplify.configure(amplifyconfig);
-    StreamSubscription hubSubscription =
-        Amplify.Hub.listen([HubChannel.Auth], (hubEvent) {
-      switch (hubEvent.eventName) {
-        case "SIGNED_IN":
-          {
-            print("USER IS SIGNED IN");
-          }
-          break;
-        case "SIGNED_OUT":
-          {
-            print("USER IS SIGNED OUT");
-          }
-          break;
-        case "SESSION_EXPIRED":
-          {
-            print("USER IS SIGNED IN/SESSION EXPIRED");
-          }
-          break;
-        default:
-          print("HERE");
-      }
-    });
-  } on AmplifyAlreadyConfiguredException {
-    print(
-        "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
-  }
 }
 
 class MyApp extends StatefulWidget {

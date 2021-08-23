@@ -317,8 +317,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        ConfirmLoginPageWidget(
-                                            phoneNumberController.text),
+                                        ConfirmLoginPageWidget(),
                                   ),
                                 );
                               },

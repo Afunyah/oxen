@@ -360,8 +360,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               // NavBarPage(initialPage: 'myTasks'),
-                                              ConfirmLoginPageWidget(
-                                                  phoneNumberController.text)),
+                                              ConfirmLoginPageWidget()),
                                     );
                                   },
                                   text: 'Login',
@@ -440,30 +439,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 3, 0, 18),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      await checkSession();
-                                    },
-                                    text: 'Log Out',
-                                    options: FFButtonOptions(
-                                      width: 100,
-                                      height: 20,
-                                      color: FlutterFlowTheme.primaryColor,
-                                      textStyle:
-                                          FlutterFlowTheme.subtitle2.override(
-                                        fontFamily: 'Lexend Deca',
-                                        color: Colors.white,
-                                      ),
-                                      elevation: 0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: 0,
-                                    ),
-                                  )),
                             ],
                           ),
                         ),

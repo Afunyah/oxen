@@ -105,7 +105,6 @@ class _SplashScreenPageWidgetState extends State<SplashScreenPageWidget> {
                             ),
                             FFButtonWidget(
                               onPressed: () async {
-                                await checkSession();
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

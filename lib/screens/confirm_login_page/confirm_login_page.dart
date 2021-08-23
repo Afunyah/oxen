@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class ConfirmLoginPageWidget extends StatefulWidget {
-  final String username;
-  ConfirmLoginPageWidget(this.username, {Key? key}) : super(key: key);
+  const ConfirmLoginPageWidget({Key? key}) : super(key: key);
 
   @override
   _ConfirmLoginPageWidgetState createState() => _ConfirmLoginPageWidgetState();
