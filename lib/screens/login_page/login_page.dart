@@ -30,7 +30,7 @@ import 'package:oxen/screens/confirm_login_page/confirm_login_page.dart';
 //     }
 //   }
 
-//   Future<String?> _regUser(LoginData data) async {
+//   Future<String?> _registerUser(LoginData data) async {
 //     print('Name: ${data.name}, Password: ${data.password}');
 
 //     try {
@@ -85,7 +85,7 @@ import 'package:oxen/screens/confirm_login_page/confirm_login_page.dart';
 //     return FlutterLogin(
 //       title: 'Oxen',
 //       onLogin: _authUser,
-//       onSignup: _regUser,
+//       onSignup: _registerUser,
 //       onRecoverPassword: _recoverPassword,
 //     );
 //   }

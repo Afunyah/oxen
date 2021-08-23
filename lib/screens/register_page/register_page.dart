@@ -304,7 +304,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                 //   return;
                                 // }
 
-                                final user = await regUser(
+                                final user = await registerUser(
                                   phoneNumberController.text,
                                 );
                                 if (!user) {

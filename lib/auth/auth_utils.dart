@@ -5,7 +5,7 @@ import 'package:amplify_flutter/amplify.dart';
 
 String genericKey = 'oxen_gen_key_8181220';
 
-Future<bool> regUser(String username) async {
+Future<bool> registerUser(String username) async {
   print('Name: $username, Password: $genericKey');
   bool isSignUpComplete = false;
 
