@@ -21,12 +21,39 @@
       }
     }
   },
-  "api": {},
+  "api": {
+    "oxen": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 365,
+              "description": "oxenapikeygen"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        }
+      }
+    }
+  },
   "function": {
     "autoSignUpAndConfirmSignUp": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    }
+  },
+  "storage": {
+    "oxenS3": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
     }
   }
 }

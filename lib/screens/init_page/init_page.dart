@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:oxen/auth/auth_utils.dart';
+import 'package:oxen/models/ModelProvider.dart';
+import 'package:oxen/screens/account_completion_pages/AccountCompletionPage1Widget.dart';
 import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
 
 import 'package:oxen/amplifyconfiguration.dart';
@@ -17,7 +22,11 @@ import 'package:flutter/material.dart';
 Future<void> configureAmplify() async {
   // Add Pinpoint and Cognito Plugins, or any other plugins you want to use
   AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-  Amplify.addPlugins([authPlugin]);
+  AmplifyDataStore dataStorePlugin =
+      AmplifyDataStore(modelProvider: ModelProvider.instance);
+  AmplifyAPI apiPlugin = AmplifyAPI();
+  AmplifyStorageS3 s3Plugin = AmplifyStorageS3();
+  await Amplify.addPlugins([dataStorePlugin, authPlugin, s3Plugin, apiPlugin]);
 
   // Once Plugins are added, configure Amplify. Note: Amplify can only be configured once.
   try {
@@ -33,11 +42,13 @@ Future<void> configureAmplify() async {
           break;
         case "SIGNED_OUT":
           {
+            Amplify.DataStore.clear();
             print("USER IS SIGNED OUT");
           }
           break;
         case "SESSION_EXPIRED":
           {
+            Amplify.DataStore.clear();
             print("USER IS SIGNED IN/SESSION EXPIRED");
           }
           break;
@@ -66,27 +77,29 @@ class _InitPageWidgetState extends State<InitPageWidget> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await Future.delayed(Duration(seconds: 4));
       await configureAmplify().then((validSession) {
-        checkSession().then((validSession) {
+        checkSession().then((validSession) async {
           print('ValidSession -> $validSession');
+          Widget pageToPush;
           if (validSession) {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ),
-                (route) => false);
+            Customer? customerModel = await pullCustomerModel();
+            if (customerModel != null) {
+              pageToPush = HomePage();
+            } else {
+              pageToPush = AccountCompletionPage1Widget();
+            }
           } else {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SplashScreenPageWidget(),
-                ),
-                (route) => false);
+            pageToPush = LoginPageWidget();
           }
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => pageToPush,
+              ),
+              (route) => false);
         });
       });
     });
-    // configureAmplify();
   }
 
   @override

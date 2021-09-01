@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify.dart';
+import 'package:oxen/globals.dart';
+import 'package:oxen/models/ModelProvider.dart';
 
 String genericKey = 'oxen_gen_key_8181220';
 
@@ -18,6 +21,9 @@ Future<bool> registerUser(String username) async {
         options: CognitoSignUpOptions(userAttributes: userAttributes));
 
     isSignUpComplete = res.isSignUpComplete;
+    if (isSignUpComplete) {
+      Globals.setPhoneNumber(username);
+    }
   } on AuthException catch (e) {
     print(e.message);
   }
@@ -25,14 +31,19 @@ Future<bool> registerUser(String username) async {
   return isSignUpComplete;
 }
 
-Future<bool> verifyCode(String username, String code) async {
+Future<bool> registerCustomer(
+    String username, String fName, String lName) async {
   bool isSignUpComplete = false;
-  try {
-    SignUpResult res = await Amplify.Auth.confirmSignUp(
-        username: username, confirmationCode: code);
 
-    isSignUpComplete = res.isSignUpComplete;
-  } on AuthException catch (e) {
+  try {
+    Customer customer = Customer(
+      firstName: fName,
+      lastName: lName,
+      phoneNumber: username,
+      status: '',
+    );
+    await Amplify.DataStore.save(customer);
+  } on DataStoreException catch (e) {
     print(e.message);
   }
 
@@ -57,6 +68,11 @@ Future<bool> confirmUserLogin(String code) async {
 Future<bool> userSignOut() async {
   bool isSignedOut = true;
 
+  Globals.setPhoneNumber('');
+  Globals.setSignedInStatus(false);
+
+  await Amplify.DataStore.clear();
+
   try {
     await Amplify.Auth.signOut();
   } on AuthException catch (e) {
@@ -72,12 +88,7 @@ Future<bool> authUser(String username) async {
   // CognitoAuthSession? session = (await Amplify.Auth.fetchAuthSession(
   //         options: CognitoSessionOptions(getAWSCredentials: true)))
   //     as CognitoAuthSession?;
-
-  // print('Access key: ${session!.credentials!.awsAccessKey}');
-  // print('Secret Key: ${session.credentials!.awsSecretKey}');
   // print('Identity ID:  ${session.identityId}');
-  // print('User Pool tokens: ${session.userPoolTokens!.accessToken}');
-  // print('User Pool tokens: ${session.userPoolTokens!.idToken}');
 
   try {
     SignInResult res = await Amplify.Auth.signIn(
@@ -87,27 +98,12 @@ Future<bool> authUser(String username) async {
 
     isSignedIn = res
         .isSignedIn; // I think will always be false since MFA enforced. set state()?
+    Globals.setPhoneNumber(username);
   } on AuthException catch (e) {
     print(e.message);
   }
 
   return isSignedIn;
-}
-
-Future<bool> recoverPassword(String name) async {
-  bool isPasswordReset = false;
-
-  try {
-    ResetPasswordResult res = await Amplify.Auth.resetPassword(
-      username: name,
-    );
-
-    isPasswordReset = res.isPasswordReset;
-  } on AmplifyException catch (e) {
-    print(e);
-  }
-
-  return isPasswordReset;
 }
 
 Future<bool> checkSession() async {
@@ -116,6 +112,10 @@ Future<bool> checkSession() async {
   try {
     AuthUser currentUser = await Amplify.Auth.getCurrentUser();
     AuthSession currentSession = await Amplify.Auth.fetchAuthSession();
+
+    // I don't like setting them here, but I don't want another funcion using auth user and sess
+    Globals.setPhoneNumber(currentUser.username);
+    Globals.setSignedInStatus(currentSession.isSignedIn);
 
     print('Current User Details:');
     print(currentUser.toString());
@@ -129,6 +129,7 @@ Future<bool> checkSession() async {
     res = currentSession.isSignedIn;
   }
   // Does not work even if I remove last catch. Prints out whole err log
+  // signout on exception?
   on SignedOutException {
     print('Session logging null - no user signed in');
     return res;
@@ -140,4 +141,17 @@ Future<bool> checkSession() async {
   }
 
   return res;
+}
+
+Future<Customer?> pullCustomerModel() async {
+  if (Globals.getPhoneNumber() == '') {
+    return null;
+  }
+
+  List<Customer> userModelList = [];
+
+  userModelList = await Amplify.DataStore.query(Customer.classType,
+      where: Customer.PHONENUMBER.eq(Globals.getPhoneNumber()));
+
+  return userModelList.isNotEmpty ? userModelList[0] : null;
 }

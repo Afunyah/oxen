@@ -28,9 +28,7 @@ class Customer extends Model {
   final String? _lastName;
   final String? _phoneNumber;
   final String? _email;
-  final String? _address;
   final String? _status;
-  final String? _birthdate;
 
   @override
   getInstanceType() => classType;
@@ -64,20 +62,8 @@ class Customer extends Model {
     }
   }
   
-  String get email {
-    try {
-      return _email!;
-    } catch(e) {
-      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
-    }
-  }
-  
-  String get address {
-    try {
-      return _address!;
-    } catch(e) {
-      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
-    }
+  String? get email {
+    return _email;
   }
   
   String get status {
@@ -88,26 +74,16 @@ class Customer extends Model {
     }
   }
   
-  String get birthdate {
-    try {
-      return _birthdate!;
-    } catch(e) {
-      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
-    }
-  }
+  const Customer._internal({required this.id, required firstName, required lastName, required phoneNumber, email, required status}): _firstName = firstName, _lastName = lastName, _phoneNumber = phoneNumber, _email = email, _status = status;
   
-  const Customer._internal({required this.id, required firstName, required lastName, required phoneNumber, required email, required address, required status, required birthdate}): _firstName = firstName, _lastName = lastName, _phoneNumber = phoneNumber, _email = email, _address = address, _status = status, _birthdate = birthdate;
-  
-  factory Customer({String? id, required String firstName, required String lastName, required String phoneNumber, required String email, required String address, required String status, required String birthdate}) {
+  factory Customer({String? id, required String firstName, required String lastName, required String phoneNumber, String? email, required String status}) {
     return Customer._internal(
       id: id == null ? UUID.getUUID() : id,
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
       email: email,
-      address: address,
-      status: status,
-      birthdate: birthdate);
+      status: status);
   }
   
   bool equals(Object other) {
@@ -123,9 +99,7 @@ class Customer extends Model {
       _lastName == other._lastName &&
       _phoneNumber == other._phoneNumber &&
       _email == other._email &&
-      _address == other._address &&
-      _status == other._status &&
-      _birthdate == other._birthdate;
+      _status == other._status;
   }
   
   @override
@@ -141,24 +115,20 @@ class Customer extends Model {
     buffer.write("lastName=" + "$_lastName" + ", ");
     buffer.write("phoneNumber=" + "$_phoneNumber" + ", ");
     buffer.write("email=" + "$_email" + ", ");
-    buffer.write("address=" + "$_address" + ", ");
-    buffer.write("status=" + "$_status" + ", ");
-    buffer.write("birthdate=" + "$_birthdate");
+    buffer.write("status=" + "$_status");
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  Customer copyWith({String? id, String? firstName, String? lastName, String? phoneNumber, String? email, String? address, String? status, String? birthdate}) {
+  Customer copyWith({String? id, String? firstName, String? lastName, String? phoneNumber, String? email, String? status}) {
     return Customer(
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
-      address: address ?? this.address,
-      status: status ?? this.status,
-      birthdate: birthdate ?? this.birthdate);
+      status: status ?? this.status);
   }
   
   Customer.fromJson(Map<String, dynamic> json)  
@@ -167,12 +137,10 @@ class Customer extends Model {
       _lastName = json['lastName'],
       _phoneNumber = json['phoneNumber'],
       _email = json['email'],
-      _address = json['address'],
-      _status = json['status'],
-      _birthdate = json['birthdate'];
+      _status = json['status'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'firstName': _firstName, 'lastName': _lastName, 'phoneNumber': _phoneNumber, 'email': _email, 'address': _address, 'status': _status, 'birthdate': _birthdate
+    'id': id, 'firstName': _firstName, 'lastName': _lastName, 'phoneNumber': _phoneNumber, 'email': _email, 'status': _status
   };
 
   static final QueryField ID = QueryField(fieldName: "customer.id");
@@ -180,9 +148,7 @@ class Customer extends Model {
   static final QueryField LASTNAME = QueryField(fieldName: "lastName");
   static final QueryField PHONENUMBER = QueryField(fieldName: "phoneNumber");
   static final QueryField EMAIL = QueryField(fieldName: "email");
-  static final QueryField ADDRESS = QueryField(fieldName: "address");
   static final QueryField STATUS = QueryField(fieldName: "status");
-  static final QueryField BIRTHDATE = QueryField(fieldName: "birthdate");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Customer";
     modelSchemaDefinition.pluralName = "Customers";
@@ -220,24 +186,12 @@ class Customer extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Customer.EMAIL,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Customer.ADDRESS,
-      isRequired: true,
+      isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Customer.STATUS,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Customer.BIRTHDATE,
       isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));

@@ -44,6 +44,8 @@ dependencies:
   timeago: ^3.1.0
   url_launcher: ^6.0.9
   intl: ^0.17.0
+  amplify_api: ^0.2.2
+  amplify_storage_s3: ^0.2.2
 
 dev_dependencies:
   flutter_test:

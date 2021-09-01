@@ -1,3 +1,4 @@
+import 'package:oxen/screens/account_completion_pages/AccountCompletionPage1Widget.dart';
 import 'package:oxen/screens/home_page/home_page.dart';
 
 import 'package:oxen/auth/auth_utils.dart';
@@ -209,7 +210,8 @@ class _ConfirmLoginPageWidgetState extends State<ConfirmLoginPageWidget> {
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomePage(),
+                                  builder: (context) =>
+                                      AccountCompletionPage1Widget(),
                                 ),
                                 (r) => false,
                               );

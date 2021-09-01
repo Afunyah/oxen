@@ -16,29 +16,53 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
+import 'Company.dart';
 import 'Customer.dart';
-import 'Driver.dart';
+import 'Rating.dart';
+import 'Review.dart';
+import 'Rider.dart';
+import 'Vehicle.dart';
 
+export 'Company.dart';
 export 'Customer.dart';
-export 'Driver.dart';
+export 'Rating.dart';
+export 'Review.dart';
+export 'Rider.dart';
+export 'Vehicle.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "43a176c5dd14bb4dd20ca335722c89f0";
+  String version = "bfa7ae9939f1c2616a2c00e521863b35";
   @override
-  List<ModelSchema> modelSchemas = [Customer.schema, Driver.schema];
+  List<ModelSchema> modelSchemas = [Company.schema, Customer.schema, Rating.schema, Review.schema, Rider.schema, Vehicle.schema];
   static final ModelProvider _instance = ModelProvider();
 
   static ModelProvider get instance => _instance;
   
   ModelType getModelTypeByModelName(String modelName) {
     switch(modelName) {
+    case "Company": {
+    return Company.classType;
+    }
+    break;
     case "Customer": {
     return Customer.classType;
     }
     break;
-    case "Driver": {
-    return Driver.classType;
+    case "Rating": {
+    return Rating.classType;
+    }
+    break;
+    case "Review": {
+    return Review.classType;
+    }
+    break;
+    case "Rider": {
+    return Rider.classType;
+    }
+    break;
+    case "Vehicle": {
+    return Vehicle.classType;
     }
     break;
     default: {

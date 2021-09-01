@@ -1,0 +1,133 @@
+# type Customer @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: private}, {allow: owner, operations: [create, update, delete]}]) {
+#   id: ID!
+#   firstName: String!
+#   lastName: String!
+#   phoneNumber: AWSPhone!
+#   email: AWSEmail
+#   status: String!
+# }
+
+# type Vehicle @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: private}, {allow: owner, operations: [create, update, delete]}]) {
+#   id: ID!
+#   riderId: String!
+#   desc: String!
+# }
+
+# type Rider @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: private}, {allow: owner, operations: [create, update, delete]}]) {
+#   id: ID!
+#   firstName: String!
+#   lastName: String!
+#   phoneNumber: AWSPhone!
+#   email: AWSEmail
+#   status: String!
+#   rating: Float!
+#   ratedBy: Int!
+#   vehicleId: String!
+#   companyId: String
+#   totalEarned: Float!
+#   totalCommission: Float!
+#   financialData: AWSJSON!
+#   finishedDeliveries: Int!
+#   totalConfirmation: Boolean!
+# }
+
+
+# type Company @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: private}, {allow: owner, operations: [create, update, delete]}]) {
+#   id: ID!
+#   firstName: String!
+#   lastName: String!
+#   companyName: String!
+#   phoneNumber: AWSPhone!
+#   email: AWSEmail
+#   rating: Float!
+#   ratedBy: Int!
+#   riderIdArray: [String]
+#   totalEarned: Float!
+#   totalCommission: Float!
+#   financialData: AWSJSON!
+#   finishedDeliveries: Int!
+#   totalConfirmation: Boolean!
+# }
+
+
+# type Rating @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: private}, {allow: owner, operations: [create, update, delete]}]) {
+#   id: ID!
+#   customerId: String!
+#   targetId: String!
+#   points: Int!
+# }
+
+# type Review @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: private}, {allow: owner, operations: [create, update, delete]}]) {
+#   id: ID!
+#   customerId: String!
+#   targetId: String!
+#   content: String!
+# }
+
+
+type Customer @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  phoneNumber: AWSPhone!
+  email: AWSEmail
+  status: String!
+}
+
+type Vehicle @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  riderId: String!
+  desc: String!
+}
+
+type Rider @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  phoneNumber: AWSPhone!
+  licenseNumber: String!
+  email: AWSEmail
+  status: String!
+  rating: Float!
+  ratedBy: Int!
+  vehicleId: String!
+  companyId: String
+  totalEarned: Float!
+  totalCommission: Float!
+  financialData: AWSJSON!
+  finishedDeliveries: Int!
+  totalConfirmation: Boolean!
+}
+
+
+type Company @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  companyName: String!
+  phoneNumber: AWSPhone!
+  email: AWSEmail
+  rating: Float!
+  ratedBy: Int!
+  riderIdArray: [String]
+  totalEarned: Float!
+  totalCommission: Float!
+  financialData: AWSJSON!
+  finishedDeliveries: Int!
+  totalConfirmation: Boolean!
+}
+
+
+type Rating @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerId: String!
+  targetId: String!
+  points: Int!
+}
+
+type Review @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerId: String!
+  targetId: String!
+  content: String!
+}

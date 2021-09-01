@@ -1,5 +1,6 @@
 import 'package:oxen/auth/auth_utils.dart';
 import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
+import 'package:oxen/screens/login_page/login_page.dart';
 import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
 
 import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
@@ -103,8 +104,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      SplashScreenPageWidget()),
+                                  builder: (context) => LoginPageWidget()),
                               (route) => false));
                     },
                     options: FFButtonOptions(
