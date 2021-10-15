@@ -65,6 +65,14 @@
 # }
 
 
+type GenericUser @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
+  id: ID!
+  phoneNumber: AWSPhone!
+  isCustomer: Boolean!
+  isDriver: Boolean!
+  isCompany: Boolean!
+}
+
 type Customer @model(timestamps:{createdAt: "createdOn", updatedAt: "updatedOn"}) @auth(rules: [{allow: public}]) {
   id: ID!
   firstName: String!

@@ -1,12 +1,12 @@
+import 'package:oxen/globals.dart';
+import 'package:oxen/models/ModelProvider.dart';
 import 'package:oxen/screens/account_completion_pages/AccountCompletionPage1Widget.dart';
 import 'package:oxen/screens/home_page/home_page.dart';
-
 import 'package:oxen/auth/auth_utils.dart';
 import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
 import 'package:oxen/flutter_flow/flutter_flow_util.dart';
 import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
 class ConfirmLoginPageWidget extends StatefulWidget {
   const ConfirmLoginPageWidget({Key? key}) : super(key: key);
@@ -20,10 +20,55 @@ class _ConfirmLoginPageWidgetState extends State<ConfirmLoginPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late bool buttonDisabled;
+
+  void pageLogic() async {
+    Widget pageToPush;
+    Customer? userModel = await pullCustomerModel();
+
+    if (userModel != null) {
+      print(userModel.toString());
+      pageToPush = HomePage();
+    } else {
+      print('No user model loaded');
+      pageToPush = AccountCompletionPage1Widget();
+    }
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => pageToPush,
+        ),
+        (route) => false);
+  }
+
+  void buttonLogic() async {
+    buttonDisabled = true;
+
+    if (codeController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Enter SMS verification code.'),
+        ),
+      );
+      return;
+    }
+    final phoneVerifiedUser = await confirmUserLogin(codeController.text);
+
+    if (!phoneVerifiedUser) {
+      buttonDisabled = false;
+      return;
+    }
+
+    pageLogic();
+  }
+
   @override
   void initState() {
     super.initState();
     codeController = TextEditingController();
+
+    buttonDisabled = false;
   }
 
   @override
@@ -188,33 +233,11 @@ class _ConfirmLoginPageWidgetState extends State<ConfirmLoginPageWidget> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           FFButtonWidget(
-                            onPressed: () async {
-                              if (codeController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        Text('Enter SMS verification code.'),
-                                  ),
-                                );
-                                return;
+                            onPressed: () {
+                              if (buttonDisabled) {
+                              } else {
+                                buttonLogic();
                               }
-                              final phoneVerifiedUser =
-                                  await confirmUserLogin(codeController.text);
-
-                              print('Login Status:' +
-                                  phoneVerifiedUser.toString());
-
-                              if (!phoneVerifiedUser) {
-                                return;
-                              }
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AccountCompletionPage1Widget(),
-                                ),
-                                (r) => false,
-                              );
                             },
                             text: 'Verify',
                             options: FFButtonOptions(

@@ -5,7 +5,6 @@ import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
 import 'package:oxen/screens/confirm_login_page/confirm_login_page.dart';
 import 'package:oxen/screens/login_page/login_page.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RegisterPageWidget extends StatefulWidget {
@@ -22,6 +21,28 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late bool buttonDisabled;
+
+  void buttonLogic() async {
+    buttonDisabled = true;
+    final user = await registerUser(
+      phoneNumberController.text,
+    );
+    if (!user) {
+      buttonDisabled = false;
+      return;
+    }
+
+    await authUser(phoneNumberController.text);
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ConfirmLoginPageWidget(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +50,8 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
     phoneNumberController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
+
+    buttonDisabled = false;
   }
 
   @override
@@ -215,23 +238,11 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
                             child: FFButtonWidget(
-                              onPressed: () async {
-                                final user = await registerUser(
-                                  phoneNumberController.text,
-                                );
-                                if (!user) {
-                                  return;
+                              onPressed: () {
+                                if (buttonDisabled) {
+                                } else {
+                                  buttonLogic();
                                 }
-
-                                await authUser(phoneNumberController.text);
-
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ConfirmLoginPageWidget(),
-                                  ),
-                                );
                               },
                               text: 'Create Account',
                               options: FFButtonOptions(

@@ -8,8 +8,6 @@ import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:oxen/auth/auth_utils.dart';
 import 'package:oxen/models/ModelProvider.dart';
 import 'package:oxen/screens/account_completion_pages/AccountCompletionPage1Widget.dart';
-import 'package:oxen/screens/splashscreen_page/splashscreen_page.dart';
-
 import 'package:oxen/amplifyconfiguration.dart';
 import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
 import 'package:oxen/flutter_flow/flutter_flow_util.dart';
@@ -30,10 +28,9 @@ Future<void> configureAmplify() async {
 
   // Once Plugins are added, configure Amplify. Note: Amplify can only be configured once.
   try {
-    // await Amplify.configure(amplifyconfig).whenComplete(() => checkSession());\
     await Amplify.configure(amplifyconfig);
-    StreamSubscription hubSubscription =
-        Amplify.Hub.listen([HubChannel.Auth], (hubEvent) {
+
+    Amplify.Hub.listen([HubChannel.Auth], (hubEvent) {
       switch (hubEvent.eventName) {
         case "SIGNED_IN":
           {
@@ -53,7 +50,7 @@ Future<void> configureAmplify() async {
           }
           break;
         default:
-          print("HERE");
+          print("SOME UNKNOWN AUTH HUBEVENT");
       }
     });
   } on AmplifyAlreadyConfiguredException {

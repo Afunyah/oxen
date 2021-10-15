@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:oxen/screens/confirm_login_page/confirm_login_page.dart';
-
 import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
 import 'package:oxen/flutter_flow/flutter_flow_util.dart';
 import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
 import 'package:oxen/screens/register_page/register_page.dart';
 import 'package:oxen/auth/auth_utils.dart';
-//import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LoginPageWidget extends StatefulWidget {
@@ -23,6 +21,28 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late bool buttonDisabled;
+
+  void buttonLogic() async {
+    buttonDisabled = true;
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    bool user = await authUser(
+      phoneNumberController.text,
+    );
+
+    if (!user) {
+      buttonDisabled = false;
+      return;
+    }
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ConfirmLoginPageWidget()),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +50,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     phoneNumberController = TextEditingController();
     passwordTextController = TextEditingController();
     passwordVisibility = false;
+
+    buttonDisabled = false;
   }
 
   @override
@@ -256,21 +278,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
                                 child: FFButtonWidget(
-                                  onPressed: () async {
-                                    // if (!formKey.currentState!.validate()) {
-                                    //   return;
-                                    // }
-                                    await authUser(
-                                      phoneNumberController.text,
-                                    );
-
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              // NavBarPage(initialPage: 'myTasks'),
-                                              ConfirmLoginPageWidget()),
-                                    );
+                                  onPressed: () {
+                                    if (buttonDisabled) {
+                                    } else {
+                                      buttonLogic();
+                                    }
                                   },
                                   text: 'Login',
                                   options: FFButtonOptions(

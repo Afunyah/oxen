@@ -1,15 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:oxen/auth/auth_utils.dart';
-import 'package:oxen/models/ModelProvider.dart';
 import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
 import 'package:oxen/flutter_flow/flutter_flow_util.dart';
 import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
 import 'package:oxen/globals.dart';
 import 'package:oxen/screens/home_page/home_page.dart';
-
 import 'package:oxen/screens/login_page/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AccountCompletionPage1Widget extends StatefulWidget {
   AccountCompletionPage1Widget({Key? key}) : super(key: key);
@@ -30,7 +27,29 @@ class _AccountCompletionPage1WidgetState
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  bool loadingPath = false;
+  late bool buttonDisabled;
+
+  void submitButtonLogic() async {
+    buttonDisabled = true;
+
+    bool user = await registerCustomer(
+      Globals.getPhoneNumber(),
+      firstNameController!.text,
+      lastNameController!.text,
+    );
+
+    if (!user) {
+      buttonDisabled = false;
+      return;
+    }
+
+    await Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+        (route) => false);
+  }
 
   @override
   void initState() {
@@ -39,6 +58,8 @@ class _AccountCompletionPage1WidgetState
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
     emailController = TextEditingController();
+
+    buttonDisabled = false;
   }
 
   @override
@@ -272,19 +293,11 @@ class _AccountCompletionPage1WidgetState
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FFButtonWidget(
-                            onPressed: () async {
-                              await registerCustomer(
-                                Globals.getPhoneNumber(),
-                                firstNameController!.text,
-                                lastNameController!.text,
-                              );
-
-                              await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePage(),
-                                  ),
-                                  (route) => false);
+                            onPressed: () {
+                              if (buttonDisabled) {
+                              } else {
+                                submitButtonLogic();
+                              }
                             },
                             text: 'Submit',
                             options: FFButtonOptions(

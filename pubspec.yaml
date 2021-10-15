@@ -27,9 +27,9 @@ dependencies:
 
 
 
-  amplify_flutter: ^0.2.0
-  amplify_datastore: ^0.2.0
-  amplify_auth_cognito: ^0.2.0
+  amplify_flutter: ^0.2.4
+  amplify_datastore: ^0.2.4
+  amplify_auth_cognito: ^0.2.4
 
   page_transition: ^2.0.2
 
@@ -44,8 +44,9 @@ dependencies:
   timeago: ^3.1.0
   url_launcher: ^6.0.9
   intl: ^0.17.0
-  amplify_api: ^0.2.2
-  amplify_storage_s3: ^0.2.2
+  amplify_api: ^0.2.4
+  amplify_storage_s3: ^0.2.4
+  flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:

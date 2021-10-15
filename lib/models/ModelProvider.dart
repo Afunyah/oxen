@@ -18,6 +18,7 @@
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'Company.dart';
 import 'Customer.dart';
+import 'GenericUser.dart';
 import 'Rating.dart';
 import 'Review.dart';
 import 'Rider.dart';
@@ -25,6 +26,7 @@ import 'Vehicle.dart';
 
 export 'Company.dart';
 export 'Customer.dart';
+export 'GenericUser.dart';
 export 'Rating.dart';
 export 'Review.dart';
 export 'Rider.dart';
@@ -32,9 +34,9 @@ export 'Vehicle.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "bfa7ae9939f1c2616a2c00e521863b35";
+  String version = "e9318be9484dd208d3b6692d3fcabc71";
   @override
-  List<ModelSchema> modelSchemas = [Company.schema, Customer.schema, Rating.schema, Review.schema, Rider.schema, Vehicle.schema];
+  List<ModelSchema> modelSchemas = [Company.schema, Customer.schema, GenericUser.schema, Rating.schema, Review.schema, Rider.schema, Vehicle.schema];
   static final ModelProvider _instance = ModelProvider();
 
   static ModelProvider get instance => _instance;
@@ -47,6 +49,10 @@ class ModelProvider implements ModelProviderInterface {
     break;
     case "Customer": {
     return Customer.classType;
+    }
+    break;
+    case "GenericUser": {
+    return GenericUser.classType;
     }
     break;
     case "Rating": {

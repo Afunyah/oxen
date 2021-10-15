@@ -12,6 +12,8 @@ Future<bool> registerUser(String username) async {
   print('Name: $username, Password: $genericKey');
   bool isSignUpComplete = false;
 
+  Globals.setPhoneNumber(username);
+
   try {
     Map<String, String> userAttributes = {};
 
@@ -21,11 +23,19 @@ Future<bool> registerUser(String username) async {
         options: CognitoSignUpOptions(userAttributes: userAttributes));
 
     isSignUpComplete = res.isSignUpComplete;
-    if (isSignUpComplete) {
-      Globals.setPhoneNumber(username);
+  } on UsernameExistsException catch (e) {
+    Customer? customerModel = await pullCustomerModel();
+    if (customerModel != null) {
+      print('Account already exists');
+    } else {
+      isSignUpComplete = true;
     }
   } on AuthException catch (e) {
     print(e.message);
+  }
+
+  if (!isSignUpComplete) {
+    Globals.setPhoneNumber('');
   }
 
   return isSignUpComplete;
@@ -33,21 +43,20 @@ Future<bool> registerUser(String username) async {
 
 Future<bool> registerCustomer(
     String username, String fName, String lName) async {
-  bool isSignUpComplete = false;
-
   try {
     Customer customer = Customer(
       firstName: fName,
       lastName: lName,
       phoneNumber: username,
-      status: '',
+      status: 'f',
     );
     await Amplify.DataStore.save(customer);
   } on DataStoreException catch (e) {
     print(e.message);
+    return false;
   }
 
-  return isSignUpComplete;
+  return true;
 }
 
 Future<bool> confirmUserLogin(String code) async {
@@ -58,6 +67,9 @@ Future<bool> confirmUserLogin(String code) async {
         await Amplify.Auth.confirmSignIn(confirmationValue: code);
 
     isSignedIn = res.isSignedIn;
+    if (isSignedIn) {
+      Globals.clearLoginAttempts();
+    }
   } on AuthException catch (e) {
     print(e.message);
   }
@@ -66,44 +78,45 @@ Future<bool> confirmUserLogin(String code) async {
 }
 
 Future<bool> userSignOut() async {
-  bool isSignedOut = true;
-
-  Globals.setPhoneNumber('');
-  Globals.setSignedInStatus(false);
-
-  await Amplify.DataStore.clear();
-
   try {
     await Amplify.Auth.signOut();
+    Globals.setPhoneNumber('');
+    Globals.setUserModelID('');
+    Globals.setSignedInStatus(false);
+
+    await Amplify.DataStore.stop();
+    await Amplify.DataStore.clear();
+    await Amplify.DataStore.start();
   } on AuthException catch (e) {
     print(e.message);
+    return false;
   }
-  return isSignedOut;
+  return true;
 }
 
 Future<bool> authUser(String username) async {
   print('Name: $username, Password: $genericKey');
-  bool isSignedIn = false;
 
-  // CognitoAuthSession? session = (await Amplify.Auth.fetchAuthSession(
-  //         options: CognitoSessionOptions(getAWSCredentials: true)))
-  //     as CognitoAuthSession?;
-  // print('Identity ID:  ${session.identityId}');
+  Globals.incrementLoginAttempts(); //cleared after sign in confirmed
+  print('Login Attempts : ' + await Globals.getLoginAttempts());
 
   try {
     SignInResult res = await Amplify.Auth.signIn(
       username: username,
       password: genericKey,
+      options: CognitoSignInOptions(
+          clientMetadata: {'loginAttempts': await Globals.getLoginAttempts()}),
     );
 
-    isSignedIn = res
-        .isSignedIn; // I think will always be false since MFA enforced. set state()?
+    // isSignedIn = res
+    //     .isSignedIn; // I think will always be false since MFA enforced. set state()?
     Globals.setPhoneNumber(username);
   } on AuthException catch (e) {
     print(e.message);
+    return false;
   }
 
-  return isSignedIn;
+  return true;
 }
 
 Future<bool> checkSession() async {
@@ -144,14 +157,23 @@ Future<bool> checkSession() async {
 }
 
 Future<Customer?> pullCustomerModel() async {
+  print('Pulling Customer Model');
   if (Globals.getPhoneNumber() == '') {
+    print('No Global Phone Number');
     return null;
   }
+
+  await Globals.pullCloud();
 
   List<Customer> userModelList = [];
 
   userModelList = await Amplify.DataStore.query(Customer.classType,
       where: Customer.PHONENUMBER.eq(Globals.getPhoneNumber()));
 
-  return userModelList.isNotEmpty ? userModelList[0] : null;
+  if (userModelList.isNotEmpty) {
+    Globals.setUserModelID(userModelList[0].id);
+    return userModelList[0];
+  }
+  return null;
+
 }
