@@ -79,6 +79,7 @@ class _InitPageWidgetState extends State<InitPageWidget> {
           Widget pageToPush;
           if (validSession) {
             Customer? customerModel = await pullCustomerModel();
+            
             if (customerModel != null) {
               pageToPush = HomePage();
             } else {

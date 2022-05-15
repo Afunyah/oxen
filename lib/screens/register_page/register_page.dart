@@ -272,7 +272,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 0, 0, 6),
                                   child: Text(
-                                    'Don’t have an account yet? ',
+                                    "Don't have an account yet? ",
                                     style: FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: FlutterFlowTheme.darkBG,

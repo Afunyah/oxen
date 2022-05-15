@@ -1,6 +1,7 @@
 import 'package:oxen/auth/auth_utils.dart';
 import 'package:oxen/flutter_flow/flutter_flow_widgets.dart';
 import 'package:oxen/screens/login_page/login_page.dart';
+import 'package:oxen/screens/request_delivery_page/request_delivery_page.dart';
 import 'package:oxen/flutter_flow/flutter_flow_theme.dart';
 import 'package:oxen/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // @override
-  // void initState() async{
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +89,32 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 2, 0, 20),
+                child: FFButtonWidget(
+                    text: 'Request Delivery',
+                    onPressed: () async {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RequestDeliveryPageWidget()));
+                    },
+                    options: FFButtonOptions(
+                      width: 200,
+                      height: 50,
+                      color: FlutterFlowTheme.primaryColor,
+                      textStyle: FlutterFlowTheme.subtitle2.override(
+                        fontFamily: 'Lexend Deca',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: 8,
+                    ))),
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 2, 0, 20),
                 child: FFButtonWidget(

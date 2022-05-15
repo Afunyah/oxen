@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oxen/screens/init_page/init_page.dart';
+import 'package:oxen/screens/request_delivery_page/end_location_page.dart';
+import 'package:oxen/screens/request_delivery_page/start_location_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +22,12 @@ class _MyAppState extends State<MyApp> {
       ),
       // home: SplashScreenPageWidget(),
       home: InitPageWidget(),
+      routes: {
+        StartLocationPageWidget.routeName: (context) =>
+            const StartLocationPageWidget(),
+        EndLocationPageWidget.routeName: (context) =>
+            const EndLocationPageWidget()
+      },
     );
   }
 }

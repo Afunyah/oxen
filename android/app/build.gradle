@@ -26,7 +26,9 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
+    // was 30, before maps was added then 31
+    // 32 for some other maps plugin that i added
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

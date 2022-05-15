@@ -111,6 +111,7 @@ Future<bool> authUser(String username) async {
     // isSignedIn = res
     //     .isSignedIn; // I think will always be false since MFA enforced. set state()?
     Globals.setPhoneNumber(username);
+    print(username);
   } on AuthException catch (e) {
     print(e.message);
     return false;
@@ -125,19 +126,30 @@ Future<bool> checkSession() async {
   try {
     AuthUser currentUser = await Amplify.Auth.getCurrentUser();
     AuthSession currentSession = await Amplify.Auth.fetchAuthSession();
+    List<AuthUserAttribute> userAttributes = await Amplify.Auth.fetchUserAttributes();
 
     // I don't like setting them here, but I don't want another funcion using auth user and sess
-    Globals.setPhoneNumber(currentUser.username);
-    Globals.setSignedInStatus(currentSession.isSignedIn);
+    // Globals.setPhoneNumber(currentUser.username);
+    // Globals.setSignedInStatus(currentSession.isSignedIn);
 
-    print('Current User Details:');
-    print(currentUser.toString());
-    print(currentUser.userId);
-    print(currentUser.username);
+    // print('Current User Details:');
+    // print(currentUser);
+    // print(currentUser.userId);
+    // print(currentUser.username.toString());
+
+    print('Current User Attributes:');
+    
+    Map<String, dynamic> attrMapp = {};
+    userAttributes.forEach((elem)=>attrMapp[elem.userAttributeKey]=elem.value);
+    print(attrMapp);
 
     print('Current Session Details:');
     print(currentSession.toString());
     print(currentSession.isSignedIn);
+
+    // I don't like setting them here, but I don't want another funcion using auth user and sess
+    Globals.setPhoneNumber(attrMapp['phone_number']);
+    Globals.setSignedInStatus(currentSession.isSignedIn);
 
     res = currentSession.isSignedIn;
   }
@@ -169,6 +181,8 @@ Future<Customer?> pullCustomerModel() async {
 
   userModelList = await Amplify.DataStore.query(Customer.classType,
       where: Customer.PHONENUMBER.eq(Globals.getPhoneNumber()));
+
+      
 
   if (userModelList.isNotEmpty) {
     Globals.setUserModelID(userModelList[0].id);
